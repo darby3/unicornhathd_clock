@@ -33,6 +33,8 @@ text_width += width + text_x
 try:
     while True:
         current_time = datetime.datetime.now().strftime('%I%M')
+        current_seconds = int(datetime.datetime.now().strftime('%S')) * 3
+        print (current_seconds)
 
         TEXT_UL = current_time[0] 
         TEXT_UR = current_time[1]
@@ -42,10 +44,10 @@ try:
         image = Image.new('RGB', (text_width, max(height, text_height)), (0, 0, 0))
 
         draw = ImageDraw.Draw(image)
-        draw.text((text_x, text_y), TEXT_UL, fill=(0, 255, 255), font=font)
-        draw.text((text_x + offset, text_y), TEXT_UR, fill=(0, 255, 255), font=font)
-        draw.text((text_x, text_y + offset), TEXT_LL, fill=(0, 255, 255), font=font)
-        draw.text((text_x + offset, text_y + offset), TEXT_LR, fill=(0, 255, 255), font=font)
+        draw.text((text_x, text_y), TEXT_UL, fill=(0, 100, current_seconds), font=font)
+        draw.text((text_x + offset, text_y), TEXT_UR, fill=(0, 100, current_seconds), font=font)
+        draw.text((text_x, text_y + offset), TEXT_LL, fill=(0, current_seconds, 100), font=font)
+        draw.text((text_x + offset, text_y + offset), TEXT_LR, fill=(0, current_seconds, 100), font=font)
 
         unicornhathd.clear()
         

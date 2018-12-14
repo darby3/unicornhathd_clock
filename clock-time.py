@@ -15,7 +15,7 @@ FONT = ('/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf', 9)
 width, height = unicornhathd.get_shape()
 
 unicornhathd.rotation(90)
-unicornhathd.brightness(0.25)
+unicornhathd.brightness(0.5)
 
 text_x = 0 
 text_y = 0
@@ -32,22 +32,36 @@ text_width += width + text_x
 
 try:
     while True:
-        current_time = datetime.datetime.now().strftime('%I%M')
-        current_seconds = int(datetime.datetime.now().strftime('%S')) * 3
-        print (current_seconds)
+        current_hour = datetime.datetime.now().strftime('%I')
+        current_minute = datetime.datetime.now().strftime('%M')
+        current_seconds = int(datetime.datetime.now().strftime('%S')) * 2
 
-        TEXT_UL = current_time[0] 
-        TEXT_UR = current_time[1]
-        TEXT_LL = current_time[2]
-        TEXT_LR = current_time[3]
+        try:
+            active_minute
+        except NameError:
+            active_minute = int(current_minute)
+            rgb_place = random.randint(0,2)
+
+        if int(current_minute) != active_minute:
+            active_minute = int(current_minute)
+            rgb_place = random.randint(0,2)
+
+        rgb_values = [0, 0, 0]
+        rgb_values[rgb_place] = 125
+        fill_values = (rgb_values[0] + current_seconds, rgb_values[1] + current_seconds, rgb_values[2] + current_seconds)
+
+        TEXT_UL = current_hour[0]
+        TEXT_UR = current_hour[1]
+        TEXT_LL = current_minute[0]
+        TEXT_LR = current_minute[1]
 
         image = Image.new('RGB', (text_width, max(height, text_height)), (0, 0, 0))
 
         draw = ImageDraw.Draw(image)
-        draw.text((text_x, text_y), TEXT_UL, fill=(0, 100, current_seconds), font=font)
-        draw.text((text_x + offset, text_y), TEXT_UR, fill=(0, 100, current_seconds), font=font)
-        draw.text((text_x, text_y + offset), TEXT_LL, fill=(0, current_seconds, 100), font=font)
-        draw.text((text_x + offset, text_y + offset), TEXT_LR, fill=(0, current_seconds, 100), font=font)
+        draw.text((text_x, text_y), TEXT_UL, fill=fill_values, font=font)
+        draw.text((text_x + offset, text_y), TEXT_UR, fill=fill_values, font=font)
+        draw.text((text_x, text_y + offset), TEXT_LL, fill=fill_values, font=font)
+        draw.text((text_x + offset, text_y + offset), TEXT_LR, fill=fill_values, font=font)
 
         unicornhathd.clear()
         

@@ -15,7 +15,7 @@ FONT = ('/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf', 9)
 width, height = unicornhathd.get_shape()
 
 unicornhathd.rotation(90)
-unicornhathd.brightness(0.5)
+unicornhathd.brightness(0.25)
 
 text_x = 0 
 text_y = 0
@@ -40,15 +40,19 @@ try:
             active_minute
         except NameError:
             active_minute = int(current_minute)
-            rgb_place = random.randint(0,2)
+            r_value = random.randint(50, 255)
+            g_value = random.randint(50, 255)
+            b_value = random.randint(50, 255)
 
         if int(current_minute) != active_minute:
             active_minute = int(current_minute)
-            rgb_place = random.randint(0,2)
+            if active_minute % 5 == 0:
+                r_value = random.randint(50, 255)
+                g_value = random.randint(50, 255)
+                b_value = random.randint(50, 255)
 
-        rgb_values = [0, 0, 0]
-        rgb_values[rgb_place] = 125
-        fill_values = (rgb_values[0] + current_seconds, rgb_values[1] + current_seconds, rgb_values[2] + current_seconds)
+        rgb_values = [r_value, g_value, b_value]
+        fill_values = (rgb_values[0], rgb_values[1], rgb_values[2])
 
         TEXT_UL = current_hour[0]
         TEXT_UR = current_hour[1]
